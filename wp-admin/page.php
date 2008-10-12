@@ -34,7 +34,9 @@ function redirect_page($page_ID) {
 	} elseif (!empty($referredby) && $referredby != $referer) {
 		$location = $_POST['referredby'];
 		$location = remove_query_arg('_wp_original_http_referer', $location);
-		if ( false !== strpos($location, 'edit-pages.php') )
+		if ( $_POST['referredby'] == 'redo' )
+			$location = get_permalink( $page_ID );
+		elseif ( false !== strpos($location, 'edit-pages.php') )
 			$location = add_query_arg('posted', $page_ID, $location);
 		elseif ( false !== strpos($location, 'wp-admin') )
 			$location = "page-new.php?posted=$page_ID";
@@ -71,17 +73,16 @@ case 'edit':
 
 	if ( empty($post->ID) ) wp_die( __("You attempted to edit a page that doesn't exist. Perhaps it was deleted?") );
 
-	if ( 'page' != $post->post_type ) {
-		wp_redirect( get_edit_post_link( $post_ID, 'url' ) );
+	if ( 'post' == $post->post_type ) {
+		wp_redirect("post.php?action=edit&post=$post_ID");
 		exit();
 	}
 
 	wp_enqueue_script('page');
 	if ( user_can_richedit() )
 		wp_enqueue_script('editor');
-	add_thickbox();
+	wp_enqueue_script('thickbox');
 	wp_enqueue_script('media-upload');
-	wp_enqueue_script('word-count');
 
 	if ( current_user_can('edit_page', $page_ID) ) {
 		if ( $last = wp_check_post_lock( $post->ID ) ) {
@@ -147,8 +148,8 @@ case 'delete':
 	}
 
 	$sendback = wp_get_referer();
-	if (strpos($sendback, 'page.php') !== false) $sendback = admin_url('page.php');
-	elseif (strpos($sendback, 'attachments.php') !== false) $sendback = admin_url('attachments.php');
+	if (strpos($sendback, 'page.php') !== false) $sendback = get_option('siteurl') .'/wp-admin/page.php';
+	elseif (strpos($sendback, 'attachments.php') !== false) $sendback = get_option('siteurl') .'/wp-admin/attachments.php';
 	$sendback = preg_replace('|[^a-z0-9-~+_.?#=&;,/:]|i', '', $sendback);
 	wp_redirect($sendback);
 	exit();

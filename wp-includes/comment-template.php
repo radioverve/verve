@@ -9,10 +9,10 @@
  */
 
 /**
- * Retrieve the author of the current comment.
+ * get_comment_author() - Retrieve the author of the current comment
  *
- * If the comment has an empty comment_author field, then 'Anonymous' person is
- * assumed.
+ * If the comment has an empty comment_author field, then 'Anonymous' person
+ * is assumed.
  *
  * @since 1.5
  * @uses apply_filters() Calls 'get_comment_author' hook on the comment author
@@ -29,7 +29,7 @@ function get_comment_author() {
 }
 
 /**
- * Displays the author of the current comment.
+ * comment_author() - Displays the author of the current comment
  *
  * @since 0.71
  * @uses apply_filters() Calls 'comment_author' on comment author before displaying
@@ -40,7 +40,7 @@ function comment_author() {
 }
 
 /**
- * Retrieve the email of the author of the current comment.
+ * get_comment_author_email() - Retrieve the email of the author of the current comment
  *
  * @since 1.5
  * @uses apply_filters() Calls the 'get_comment_author_email' hook on the comment author email
@@ -54,13 +54,12 @@ function get_comment_author_email() {
 }
 
 /**
- * Display the email of the author of the current global $comment.
+ * comment_author_email() - Display the email of the author of the current global $comment
  *
- * Care should be taken to protect the email address and assure that email
- * harvesters do not capture your commentors' email address. Most assume that
- * their email address will not appear in raw form on the blog. Doing so will
- * enable anyone, including those that people don't want to get the email
- * address and use it for their own means good and bad.
+ * Care should be taken to protect the email address and assure that email harvesters
+ * do not capture your commentors' email address. Most assume that their email address will
+ * not appear in raw form on the blog. Doing so will enable anyone, including those that
+ * people don't want to get the email address and use it for their own means good and bad.
  *
  * @since 0.71
  * @uses apply_filters() Calls 'author_email' hook on the author email
@@ -70,13 +69,12 @@ function comment_author_email() {
 }
 
 /**
- * Display the html email link to the author of the current comment.
+ * comment_author_email_link() - Display the html email link to the author of the current comment
  *
- * Care should be taken to protect the email address and assure that email
- * harvesters do not capture your commentors' email address. Most assume that
- * their email address will not appear in raw form on the blog. Doing so will
- * enable anyone, including those that people don't want to get the email
- * address and use it for their own means good and bad.
+ * Care should be taken to protect the email address and assure that email harvesters
+ * do not capture your commentors' email address. Most assume that their email address will
+ * not appear in raw form on the blog. Doing so will enable anyone, including those that
+ * people don't want to get the email address and use it for their own means good and bad.
  *
  * @since 0.71
  * @uses apply_filters() Calls 'comment_email' hook for the display of the comment author's email
@@ -98,7 +96,7 @@ function comment_author_email_link($linktext='', $before='', $after='') {
 }
 
 /**
- * Retrieve the html link to the url of the author of the current comment.
+ * get_comment_author_link() - Retrieve the html link to the url of the author of the current comment
  *
  * @since 1.5
  * @uses apply_filters() Calls 'get_comment_author_link' hook on the complete link HTML or author
@@ -118,7 +116,7 @@ function get_comment_author_link() {
 }
 
 /**
- * Display the html link to the url of the author of the current comment.
+ * comment_author_link() - Display the html link to the url of the author of the current comment
  *
  * @since 0.71
  * @see get_comment_author_link() Echos result
@@ -128,7 +126,7 @@ function comment_author_link() {
 }
 
 /**
- * Retrieve the IP address of the author of the current comment.
+ * get_comment_author_IP() - Retrieve the IP address of the author of the current comment
  *
  * @since 1.5
  * @uses $comment
@@ -142,7 +140,7 @@ function get_comment_author_IP() {
 }
 
 /**
- * Display the IP address of the author of the current comment.
+ * comment_author_IP() - Displays the IP address of the author of the current comment
  *
  * @since 0.71
  * @see get_comment_author_IP() Echos Result
@@ -152,7 +150,7 @@ function comment_author_IP() {
 }
 
 /**
- * Retrieve the url of the author of the current comment.
+ * get_comment_author_url() - Returns the url of the author of the current comment
  *
  * @since 1.5
  * @uses apply_filters() Calls 'get_comment_author_url' hook on the comment author's URL
@@ -165,7 +163,7 @@ function get_comment_author_url() {
 }
 
 /**
- * Display the url of the author of the current comment.
+ * comment_author_url() - Display the url of the author of the current comment
  *
  * @since 0.71
  * @uses apply_filters()
@@ -176,14 +174,13 @@ function comment_author_url() {
 }
 
 /**
- * Retrieves the HTML link of the url of the author of the current comment.
+ * get_comment_author_url_link() - Retrieves the HTML link of the url of the author of the current comment
  *
- * $linktext parameter is only used if the URL does not exist for the comment
- * author. If the URL does exist then the URL will be used and the $linktext
- * will be ignored.
+ * $linktext parameter is only used if the URL does not exist for the comment author. If the URL does
+ * exist then the URL will be used and the $linktext will be ignored.
  *
- * Encapsulate the HTML link between the $before and $after. So it will appear
- * in the order of $before, link, and finally $after.
+ * Encapsulate the HTML link between the $before and $after. So it will appear in the order of $before,
+ * link, and finally $after.
  *
  * @since 1.5
  * @uses apply_filters() Calls the 'get_comment_author_url_link' on the complete HTML before returning.
@@ -205,7 +202,7 @@ function get_comment_author_url_link( $linktext = '', $before = '', $after = '' 
 }
 
 /**
- * Displays the HTML link of the url of the author of the current comment.
+ * comment_author_url_link() - Displays the HTML link of the url of the author of the current comment
  *
  * @since 0.71
  * @see get_comment_author_url_link() Echos result
@@ -219,7 +216,7 @@ function comment_author_url_link( $linktext = '', $before = '', $after = '' ) {
 }
 
 /**
- * Retrieve the comment date of the current comment.
+ * get_comment_date() - Retrieve the comment date of the current comment
  *
  * @since 1.5
  * @uses apply_filters() Calls 'get_comment_date' hook with the formated date and the $d parameter respectively
@@ -238,7 +235,7 @@ function get_comment_date( $d = '' ) {
 }
 
 /**
- * Display the comment date of the current comment.
+ * comment_date() - Display the comment date of the current comment
  *
  * @since 0.71
  *
@@ -249,7 +246,7 @@ function comment_date( $d = '' ) {
 }
 
 /**
- * Retrieve the excerpt of the current comment.
+ * get_comment_excerpt() - Retrieve the excerpt of the current comment
  *
  * Will cut each word and only output the first 20 words with '...' at the end.
  * If the word count is less than 20, then no truncating is done and no '...'
@@ -281,7 +278,7 @@ function get_comment_excerpt() {
 }
 
 /**
- * Display the excerpt of the current comment.
+ * comment_excerpt() - Returns the excerpt of the current comment
  *
  * @since 1.2
  * @uses apply_filters() Calls 'comment_excerpt' hook before displaying excerpt
@@ -291,7 +288,7 @@ function comment_excerpt() {
 }
 
 /**
- * Retrieve the comment id of the current comment.
+ * get_comment_ID() - Retrieve the comment id of the current comment
  *
  * @since 1.5
  * @uses $comment
@@ -305,7 +302,7 @@ function get_comment_ID() {
 }
 
 /**
- * Displays the comment id of the current comment.
+ * comment_ID() - Displays the comment id of the current comment
  *
  * @since 0.71
  * @see get_comment_ID() Echos Result
@@ -315,7 +312,7 @@ function comment_ID() {
 }
 
 /**
- * Retrieve the link to the current comment.
+ * get_comment_link() - Retrieve the link to the current comment
  *
  * @since 1.5
  * @uses $comment
@@ -328,7 +325,7 @@ function get_comment_link() {
 }
 
 /**
- * Retrieves the link to the current post comments.
+ * get_comments_link() - Retrieves the link to the current post comments
  *
  * @since 1.5
  *
@@ -339,7 +336,7 @@ function get_comments_link() {
 }
 
 /**
- * Displays the link to the current post comments.
+ * comments_link() - Displays the link to the current post comments
  *
  * @since 0.71
  *
@@ -351,7 +348,7 @@ function comments_link( $deprecated = '', $deprecated = '' ) {
 }
 
 /**
- * Retrieve the amount of comments a post has.
+ * get_comments_number() - Retrieve the amount of comments a post has
  *
  * @since 1.5
  * @uses apply_filters() Calls the 'get_comments_number' hook on the number of comments
@@ -376,7 +373,7 @@ function get_comments_number( $post_id = 0 ) {
 }
 
 /**
- * Display the language string for the number of comments the current post has.
+ * comments_number() - Display the language string for the number of comments the current post has
  *
  * @since 0.71
  * @uses $id
@@ -392,7 +389,7 @@ function comments_number( $zero = false, $one = false, $more = false, $deprecate
 	$number = get_comments_number($id);
 
 	if ( $number > 1 )
-		$output = str_replace('%', number_format_i18n($number), ( false === $more ) ? __('% Comments') : $more);
+		$output = str_replace('%', $number, ( false === $more ) ? __('% Comments') : $more);
 	elseif ( $number == 0 )
 		$output = ( false === $zero ) ? __('No Comments') : $zero;
 	else // must be one
@@ -402,7 +399,7 @@ function comments_number( $zero = false, $one = false, $more = false, $deprecate
 }
 
 /**
- * Retrieve the text of the current comment.
+ * get_comment_text() - Retrieve the text of the current comment
  *
  * @since 1.5
  * @uses $comment
@@ -415,7 +412,7 @@ function get_comment_text() {
 }
 
 /**
- * Displays the text of the current comment.
+ * comment_text() - Displays the text of the current comment
  *
  * @since 0.71
  * @uses apply_filters() Passes the comment content through the 'comment_text' hook before display
@@ -426,7 +423,7 @@ function comment_text() {
 }
 
 /**
- * Retrieve the comment time of the current comment.
+ * get_comment_time() - Retrieve the comment time of the current comment
  *
  * @since 1.5
  * @uses $comment
@@ -447,7 +444,7 @@ function get_comment_time( $d = '', $gmt = false ) {
 }
 
 /**
- * Display the comment time of the current comment.
+ * comment_time() - Display the comment time of the current comment
  *
  * @since 0.71
  *
@@ -458,7 +455,7 @@ function comment_time( $d = '' ) {
 }
 
 /**
- * Retrieve the comment type of the current comment.
+ * get_comment_type() - Retrieve the comment type of the current comment
  *
  * @since 1.5
  * @uses $comment
@@ -476,7 +473,7 @@ function get_comment_type() {
 }
 
 /**
- * Display the comment type of the current comment.
+ * comment_type() - Display the comment type of the current comment
  *
  * @since 0.71
  *
@@ -499,11 +496,11 @@ function comment_type($commenttxt = 'Comment', $trackbacktxt = 'Trackback', $pin
 }
 
 /**
- * Retrieve The current post's trackback URL.
+ * get_trackback_url() - Retrieve The current post's trackback URL
  *
- * There is a check to see if permalink's have been enabled and if so, will
- * retrieve the pretty path. If permalinks weren't enabled, the ID of the
- * current post is used and appended to the correct page to go to.
+ * There is a check to see if permalink's have been enabled and if so, will retrieve
+ * the pretty path. If permalinks weren't enabled, the ID of the current post is used
+ * and appended to the correct page to go to.
  *
  * @since 1.5
  * @uses apply_filters() Calls 'trackback_url' on the resulting trackback URL
@@ -522,7 +519,7 @@ function get_trackback_url() {
 }
 
 /**
- * Displays the current post's trackback URL.
+ * trackback_url() - Displays the current post's trackback URL
  *
  * @since 0.71
  * @uses get_trackback_url() Gets the trackback url for the current post
@@ -536,7 +533,7 @@ function trackback_url($deprecated = true) {
 }
 
 /**
- * Generates and displays the RDF for the trackback information of current post.
+ * trackback_rdf() - Generates and displays the RDF for the trackback information of current post
  *
  * @since 0.71
  *
@@ -560,7 +557,7 @@ function trackback_rdf($deprecated = '') {
 }
 
 /**
- * Whether the current post is open for comments.
+ * comments_open() - Whether the current post is open for comments
  *
  * @since 1.5
  * @uses $post
@@ -577,7 +574,7 @@ function comments_open( $post_id=NULL ) {
 }
 
 /**
- * Whether the current post is open for pings.
+ * pings_open() - Whether the current post is open for pings
  *
  * @since 1.5
  * @uses $post
@@ -594,14 +591,14 @@ function pings_open( $post_id = NULL ) {
 }
 
 /**
- * Displays form token for unfiltered comments.
+ * wp_comment_form_unfiltered_html_nonce() - Displays form token for unfiltered comments
  *
- * Will only display nonce token if the current user has permissions for
- * unfiltered html. Won't display the token for other users.
+ * Will only display nonce token if the current user has permissions for unfiltered html.
+ * Won't display the token for other users.
  *
- * The function was backported to 2.0.10 and was added to versions 2.1.3 and
- * above. Does not exist in versions prior to 2.0.10 in the 2.0 branch and in
- * the 2.1 branch, prior to 2.1.3. Technically added in 2.2.0.
+ * The function was backported to 2.0.10 and was added to versions 2.1.3 and above. Does not
+ * exist in versions prior to 2.0.10 in the 2.0 branch and in the 2.1 branch, prior to 2.1.3.
+ * Technically added in 2.2.0.
  *
  * @since 2.0.10 Backported to 2.0 branch
  * @since 2.1.3
@@ -614,10 +611,10 @@ function wp_comment_form_unfiltered_html_nonce() {
 }
 
 /**
- * Loads the comment template specified in $file.
+ * comments_template() - Loads the comment template specified in $file
  *
- * Will not display the comments template if not on single post or page, or if
- * the post does not have comments.
+ * Will not display the comments template if not on single post or page, or
+ * if the post does not have comments.
  *
  * Uses the WordPress database object to query for the comments. The comments
  * are passed through the 'comments_array' filter hook with the list of comments
@@ -668,11 +665,11 @@ function comments_template( $file = '/comments.php' ) {
 	if ( file_exists( $include ) )
 		require( $include );
 	else
-		require( WP_CONTENT_DIR . '/themes/default/comments.php');
+		require( ABSPATH . 'wp-content/themes/default/comments.php');
 }
 
 /**
- * Displays the JS popup script to show a comment.
+ * comments_popup_script() - Displays the JS popup script to show a comment
  *
  * If the $file parameter is empty, then the home page is assumed. The defaults
  * for the window are 400px by 400px.
@@ -703,10 +700,9 @@ function comments_popup_script($width=400, $height=400, $file='') {
 }
 
 /**
- * Displays the link to the comments popup window for the current post ID.
+ * comments_popup_link() - Displays the link to the comments popup window for the current post ID.
  *
- * Is not meant to be displayed on single posts and pages. Should be used on the
- * lists of posts
+ * Is not meant to be displayed on single posts and pages. Should be used on the lists of posts
  *
  * @since 0.71
  * @uses $id

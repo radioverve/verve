@@ -28,13 +28,12 @@ case 'delete':
 		wp_die(__('Cheatin&#8217; uh?'));
 
 	$cat_name = get_term_field('name', $cat_ID, 'link_category');
-	$default_cat_id = get_option('default_link_category');
 
 	// Don't delete the default cats.
-    if ( $cat_ID == $default_cat_id )
+    if ( $cat_ID == get_option('default_link_category') )
 		wp_die(sprintf(__("Can&#8217;t delete the <strong>%s</strong> category: this is the default one"), $cat_name));
 
-	wp_delete_term($cat_ID, 'link_category', array('default' => $default_cat_id));
+	wp_delete_term($cat_ID, 'link_category');
 
 	$location = 'edit-link-categories.php';
 	if ( $referer = wp_get_original_referer() ) {
@@ -74,9 +73,7 @@ case 'editedcat':
 			$location = $referer;
 	}
 
-	$update =  wp_update_term($cat_ID, 'link_category', $_POST);
-
-	if ( $update && !is_wp_error($update) )
+	if ( wp_update_term($cat_ID, 'link_category', $_POST) )
 		$location = add_query_arg('message', 3, $location);
 	else
 		$location = add_query_arg('message', 5, $location);

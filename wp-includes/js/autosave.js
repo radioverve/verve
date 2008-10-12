@@ -1,8 +1,6 @@
 var autosaveLast = '';
 var autosavePeriodical;
 var autosaveOldMessage = '';
-var autosaveDelayURL = null;
-var previewwin;
 
 jQuery(function($) {
 	autosaveLast = $('#post #title').val()+$('#post #content').val();
@@ -10,16 +8,6 @@ jQuery(function($) {
 
 	//Disable autosave after the form has been submitted
 	$("#post").submit(function() { $.cancel(autosavePeriodical); });
-	
-	// Autosave when the preview button is clicked. 
-	$('#previewview a').click(function(e) {
-		autosave();
-		autosaveDelayURL = this.href;
-		previewwin = window.open('','_blank');
-
-		e.preventDefault();
-		return false;
-	});
 });
 
 function autosave_parse_response(response) {
@@ -108,16 +96,6 @@ function autosave_update_preview_link(post_id) {
 			getpermalinknonce: jQuery('#getpermalinknonce').val()
 		}, function(permalink) {
 			jQuery('#previewview').html('<a target="_blank" href="'+permalink+'" tabindex="4">'+previewText+'</a>');
-
-			// Autosave when the preview button is clicked.  
-			jQuery('#previewview a').click(function(e) {
-				autosave();
-				autosaveDelayURL = this.href;
-				previewwin = window.open('','_blank');
-
-				e.preventDefault();
-				return false;
-			});
 		});
 	}
 }
@@ -147,10 +125,6 @@ function autosave_loading() {
 
 function autosave_enable_buttons() {
 	jQuery("#submitpost :button:disabled, #submitpost :submit:disabled").attr('disabled', '');
-	if ( autosaveDelayURL ) {
-		previewwin.location = autosaveDelayURL;
-		autosaveDelayURL = null;
-	}
 }
 
 function autosave_disable_buttons() {
@@ -180,13 +154,8 @@ var autosave = function() {
 		doAutoSave = false;
 
 	/* Gotta do this up here so we can check the length when tinyMCE is in use */
-	if ( rich ) {		
-		var ed = tinyMCE.activeEditor;
-		if ( 'mce_fullscreen' == ed.id )
-			tinyMCE.get('content').setContent(ed.getContent({format : 'raw'}), {format : 'raw'});
-		tinyMCE.get('content').save();
-	}
-	
+	if ( rich ) { tinyMCE.triggerSave(); }
+
 	post_data["content"] = jQuery("#content").val();
 	if ( jQuery('#post_name').val() )
 		post_data["post_name"] = jQuery('#post_name').val();
@@ -199,6 +168,8 @@ var autosave = function() {
 	autosave_disable_buttons();
 
 	var origStatus = jQuery('#original_post_status').val();
+	if ( 'draft' != origStatus ) // autosave currently only turned on for drafts
+		doAutoSave = false;
 
 	autosaveLast = jQuery("#title").val()+jQuery("#content").val();
 	goodcats = ([]);
@@ -211,9 +182,9 @@ var autosave = function() {
 		post_data["comment_status"] = 'open';
 	if ( jQuery("#ping_status").attr("checked") )
 		post_data["ping_status"] = 'open';
-	if ( jQuery("#excerpt").size() )
+	if ( jQuery("#excerpt") )
 		post_data["excerpt"] = jQuery("#excerpt").val();
-	if ( jQuery("#post_author").size() )
+	if ( jQuery("#post_author") )
 		post_data["post_author"] = jQuery("#post_author").val();
 
 	// Don't run while the TinyMCE spellcheck is on.  Why?  Who knows.

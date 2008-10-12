@@ -7,10 +7,8 @@ body {
 	margin: 2em auto 0 auto;
 	width: 700px;
 	padding: 1em 2em;
-	-moz-border-radius: 12px;
-	-khtml-border-radius: 12px;
 	-webkit-border-radius: 12px;
-	border-radius: 12px;
+	font-size: 62.5%;
 }
 
 a { color: #2583ad; text-decoration: none; }
@@ -27,41 +25,34 @@ h2 { font-size: 16px; }
 
 p, li {
 	padding-bottom: 2px;
-	font-size: 13px;
-	line-height: 18px;
+	font-size: 1.3em;
+	line-height: 1.8em;
 }
 
 code {
-	font-size: 13px;
+	font-size: 1.3em;
 }
 
 ul, ol { padding: 5px 5px 5px 22px; }
 
 #logo { margin: 6px 0 14px 0px; border-bottom: none;}
 
-.step {
-	margin: 20px 0 15px;
-}
+.step a, .step input { font-size: 2em; }
 
-.step input {
-	font-size: 18px;
-}
-
-a.button {
-	font-size: 18px;
-}
+td input { font-size: 1.5em; }
 
 .step, th { text-align: left; padding: 0; }
 
 .submit input, .button, .button-secondary {
 	font-family: "Lucida Grande", "Lucida Sans Unicode", Tahoma, Verdana, sans-serif;
-	padding: 5px 7px 7px;
-	border: 1px solid #a3a3a3;
+	padding: 6px;
+	border: none;
 	margin-left: 0;
-	-moz-border-radius: 3px;
-	-khtml-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
+	font-size: 13px !important;
+	-moz-border-radius: 2px;
+	-khtml-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
 	color: #246;
 	background: #e5e5e5;
 }
@@ -72,7 +63,6 @@ a.button {
 
 .submit input:hover, .button:hover, .button-secondary:hover {
 	color: #d54e21;
-	border-color: #535353;
 }
 
 .form-table {
@@ -85,13 +75,12 @@ a.button {
 	margin-bottom: 9px;
 	padding: 10px;
 	border-bottom: 8px solid #fff;
-	font-size: 12px;
 }
 
 .form-table th {
-	font-size: 13px;
+	font-size: 12px;
 	text-align: left;
-	padding: 16px 10px 10px 10px;
+	padding: 12px 10px 10px 10px;
 	border-bottom: 8px solid #fff;
 	width: 110px;
 	vertical-align: top;
@@ -111,12 +100,6 @@ a.button {
 	font-size: 11px;
 }
 
-.form-table input {
-	line-height: 20px;
-	font-size: 15px;
-	padding: 2px;
-}
-
 h1 {
 	border-bottom: 1px solid #dadada;
 	clear: both;
@@ -133,10 +116,9 @@ h1 {
 
 #error-page p {
 	font-size: 14px;
-	line-height: 16px;
-	margin: 25px 0 20px;
+	line-height: 1.6em;
 }
 
 #error-page code {
-	font-size: 15px;
+	font-size: 1em;
 }

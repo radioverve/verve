@@ -14,9 +14,8 @@ if ('b' == $_GET['a']) {
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=UTF-8" />
 <title><?php _e('WordPress &#8250; Posted'); ?></title>
 <?php
-wp_admin_css( 'global', true );
-wp_admin_css( 'wp-admin', true );
-wp_admin_css( 'colors', true );
+wp_admin_css( 'css/global' );
+wp_admin_css();
 ?>
 </head>
 <body>
@@ -33,9 +32,8 @@ wp_admin_css( 'colors', true );
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('blog_charset'); ?>" />
 <title><?php _e('WordPress &#8250; Sidebar'); ?></title>
 <?php
-wp_admin_css( 'global', true );
-wp_admin_css( 'wp-admin', true );
-wp_admin_css( 'colors', true );
+wp_admin_css( 'css/global' );
+wp_admin_css();
 ?>
 <style type="text/css" media="screen">
 form {
@@ -62,8 +60,8 @@ form {
 <input type="hidden" name="user_ID" value="<?php echo $user_ID ?>" />
 <input type="hidden" name="mode" value="sidebar" />
 <?php wp_nonce_field('add-post'); ?>
-<p><label for="post_title"><?php _e('Title:'); ?></label>
-<input type="text" name="post_title" id="post_title" size="20" tabindex="1" style="width: 100%;" />
+<p><?php _e('Title:'); ?>
+<input type="text" name="post_title" size="20" tabindex="1" style="width: 100%;" />
 </p>
 <p><?php _e('Categories:'); ?>
 <span class="sidebar-categories">
@@ -71,8 +69,8 @@ form {
 </span>
 </p>
 <p>
-<label for="content">Post:</label>
-<textarea rows="8" cols="12" style="width: 100%" name="content" id="content" tabindex="2"></textarea>
+Post:
+<textarea rows="8" cols="12" style="width: 100%" name="content" tabindex="2"></textarea>
 </p>
 <p>
 	<input name="saveasdraft" type="submit" id="saveasdraft" tabindex="9" value="<?php _e('Save as Draft'); ?>" />

@@ -182,10 +182,8 @@ if (!CUSTOM_TAGS) {
 			'class' => array (),
 			'dir' => array (),
 			'align' => array (),
-			'lang' => array (),
 			'style' => array (),
-			'title' => array (),
-			'xml:lang' => array()),
+			'title' => array ()),
 		'strike' => array(),
 		'strong' => array(),
 		'sub' => array(),
@@ -431,10 +429,6 @@ function wp_kses_split2($string, $allowed_html, $allowed_protocols) {
 			$string = $newstring;
 		if ( $string == '' )
 			return '';
-		// prevent multiple dashes in comments
-		$string = preg_replace('/--+/', '-', $string);
-		// prevent three dashes closing a comment
-		$string = preg_replace('/-$/', '', $string);
 		return "<!--{$string}-->";
 	}
 	# Allow HTML comments
@@ -537,8 +531,7 @@ function wp_kses_attr($element, $attr, $allowed_html, $allowed_protocols) {
  * input. It will add quotes around attribute values that don't have any quotes
  * or apostrophes around them, to make it easier to produce HTML code that will
  * conform to W3C's HTML specification. It will also remove bad URL protocols
- * from attribute values.  It also reduces duplicate attributes by using the
- * attribute defined first (foo='bar' foo='baz' will result in foo='bar').
+ * from attribute values.
  *
  * @since 1.0.0
  *
@@ -581,9 +574,7 @@ function wp_kses_hair($attr, $allowed_protocols) {
 					{
 					$working = 1;
 					$mode = 0;
-					if(FALSE === array_key_exists($attrname, $attrarr)) {
-						$attrarr[$attrname] = array ('name' => $attrname, 'value' => '', 'whole' => $attrname, 'vless' => 'y');
-					}
+					$attrarr[] = array ('name' => $attrname, 'value' => '', 'whole' => $attrname, 'vless' => 'y');
 					$attr = preg_replace('/^\s+/', '', $attr);
 				}
 
@@ -596,9 +587,7 @@ function wp_kses_hair($attr, $allowed_protocols) {
 					{
 					$thisval = wp_kses_bad_protocol($match[1], $allowed_protocols);
 
-					if(FALSE === array_key_exists($attrname, $attrarr)) {
-						$attrarr[$attrname] = array ('name' => $attrname, 'value' => $thisval, 'whole' => "$attrname=\"$thisval\"", 'vless' => 'n');
-					}
+					$attrarr[] = array ('name' => $attrname, 'value' => $thisval, 'whole' => "$attrname=\"$thisval\"", 'vless' => 'n');
 					$working = 1;
 					$mode = 0;
 					$attr = preg_replace('/^"[^"]*"(\s+|$)/', '', $attr);
@@ -610,9 +599,7 @@ function wp_kses_hair($attr, $allowed_protocols) {
 					{
 					$thisval = wp_kses_bad_protocol($match[1], $allowed_protocols);
 
-					if(FALSE === array_key_exists($attrname, $attrarr)) {
-						$attrarr[$attrname] = array ('name' => $attrname, 'value' => $thisval, 'whole' => "$attrname='$thisval'", 'vless' => 'n');
-					}
+					$attrarr[] = array ('name' => $attrname, 'value' => $thisval, 'whole' => "$attrname='$thisval'", 'vless' => 'n');
 					$working = 1;
 					$mode = 0;
 					$attr = preg_replace("/^'[^']*'(\s+|$)/", '', $attr);
@@ -624,9 +611,7 @@ function wp_kses_hair($attr, $allowed_protocols) {
 					{
 					$thisval = wp_kses_bad_protocol($match[1], $allowed_protocols);
 
-					if(FALSE === array_key_exists($attrname, $attrarr)) {
-						$attrarr[$attrname] = array ('name' => $attrname, 'value' => $thisval, 'whole' => "$attrname=\"$thisval\"", 'vless' => 'n');
-					}
+					$attrarr[] = array ('name' => $attrname, 'value' => $thisval, 'whole' => "$attrname=\"$thisval\"", 'vless' => 'n');
 					# We add quotes to conform to W3C's HTML spec.
 					$working = 1;
 					$mode = 0;
@@ -643,10 +628,10 @@ function wp_kses_hair($attr, $allowed_protocols) {
 		}
 	} # while
 
-	if ($mode == 1 && FALSE === array_key_exists($attrname, $attrarr))
+	if ($mode == 1)
 		# special case, for when the attribute list ends with a valueless
 		# attribute like "selected"
-		$attrarr[$attrname] = array ('name' => $attrname, 'value' => '', 'whole' => $attrname, 'vless' => 'y');
+		$attrarr[] = array ('name' => $attrname, 'value' => '', 'whole' => $attrname, 'vless' => 'y');
 
 	return $attrarr;
 }

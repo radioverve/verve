@@ -23,9 +23,7 @@ function wp_dashboard_setup() {
 	/* Register Widgets and Controls */
 
 	// Recent Comments Widget
-	$mod_comments = wp_count_comments();
-	$mod_comments = $mod_comments->moderated;
-	if ( current_user_can( 'moderate_comments' ) && $mod_comments ) {
+	if ( current_user_can( 'moderate_comments' ) && $mod_comments = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->comments WHERE comment_approved = '0'") ) {
 		$notice = sprintf( __ngettext( '%d comment awaiting moderation', '%d comments awaiting moderation', $mod_comments ), $mod_comments );
 		$notice = "<a href='edit-comments.php?comment_status=moderated'>$notice</a>";
 	} else {
@@ -36,10 +34,9 @@ function wp_dashboard_setup() {
 	);
 
 	// Incoming Links Widget
-	if ( !isset( $widget_options['dashboard_incoming_links'] ) || !isset( $widget_options['dashboard_incoming_links']['home'] ) || $widget_options['dashboard_incoming_links']['home'] != get_option('home') ) {
+	if ( !isset( $widget_options['dashboard_incoming_links'] ) ) {
 		$update = true;
 		$widget_options['dashboard_incoming_links'] = array(
-			'home' => get_option('home'),
 			'link' => apply_filters( 'dashboard_incoming_links_link', 'http://blogsearch.google.com/blogsearch?hl=en&scoring=d&partner=wordpress&q=link:' . trailingslashit( get_option('home') ) ),
 			'url' => apply_filters( 'dashboard_incoming_links_feed', 'http://blogsearch.google.com/blogsearch_feeds?hl=en&scoring=d&ie=utf-8&num=10&output=rss&partner=wordpress&q=link:' . trailingslashit( get_option('home') ) ),
 			'items' => 5,
@@ -217,16 +214,16 @@ function wp_dashboard_dynamic_sidebar_params( $params ) {
 			$wp_registered_widgets[$widget_id]['callback'] = 'wp_dashboard_empty';
 			$sidebar_widget_name = $wp_registered_widget_controls[$widget_id]['name'];
 			$params[1] = 'wp_dashboard_trigger_widget_control';
-			$sidebar_before_widget .= '<form action="' . clean_url(remove_query_arg( 'edit' ))  . '" method="post">';
+			$sidebar_before_widget .= '<form action="' . remove_query_arg( 'edit' )  . '" method="post">';
 			$sidebar_after_widget   = "<div class='dashboard-widget-submit'><input type='hidden' name='sidebar' value='wp_dashboard' /><input type='hidden' name='widget_id' value='$widget_id' /><input type='submit' value='" . __( 'Save' ) . "' /></div></form>$sidebar_after_widget";
-			$links[] = '<a href="' . clean_url(remove_query_arg( 'edit' )) . '">' . __( 'Cancel' ) . '</a>';
+			$links[] = '<a href="' . remove_query_arg( 'edit' ) . '">' . __( 'Cancel' ) . '</a>';
 		} else {
-			$links[] = '<a href="' . clean_url(add_query_arg( 'edit', $widget_id )) . "#$widget_id" . '">' . __( 'Edit' ) . '</a>';
+			$links[] = '<a href="' . add_query_arg( 'edit', $widget_id ) . "#$widget_id" . '">' . __( 'Edit' ) . '</a>';
 		}
 	}
 
 	if ( $widget_feed_link )
-		$links[] = '<img class="rss-icon" src="' . includes_url('images/rss.png') . '" alt="' . __( 'rss icon' ) . '" /> <a href="' . clean_url( $widget_feed_link ) . '">' . __( 'RSS' ) . '</a>';
+		$links[] = '<img class="rss-icon" src="' . get_option( 'siteurl' ) . '/' . WPINC . '/images/rss.png" alt="' . __( 'rss icon' ) . '" /> <a href="' . clean_url( $widget_feed_link ) . '">' . __( 'RSS' ) . '</a>';
 
 	$links = apply_filters( "wp_dashboard_widget_links_$widget_id", $links );
 
@@ -270,7 +267,7 @@ function wp_dashboard_recent_comments( $sidebar_args ) {
 
 	$lambda = create_function( '', 'return 5;' );
 	add_filter( 'option_posts_per_rss', $lambda ); // hack - comments query doesn't accept per_page parameter
-	$comments_query = new WP_Query(array('feed' => 'rss2', 'withcomments' => 1));
+	$comments_query = new WP_Query('feed=rss2&withcomments=1');
 	remove_filter( 'option_posts_per_rss', $lambda );
 
 	$is_first = true;
@@ -316,7 +313,7 @@ function wp_dashboard_incoming_links_output() {
 	$widgets = get_option( 'dashboard_widget_options' );
 	@extract( @$widgets['dashboard_incoming_links'], EXTR_SKIP );
 	$rss = @fetch_rss( $url );
-	if ( isset($rss->items) && 0 < count($rss->items) )  {
+	if ( isset($rss->items) && 1 < count($rss->items) )  {// Technorati returns a 1-item feed when it has no results
 
 		echo "<ul>\n";
 
@@ -390,7 +387,8 @@ function wp_dashboard_secondary_output() {
 	$rss->items = array_slice($rss->items, 0, $items);
 	foreach ($rss->items as $item ) {
 		$title = wp_specialchars($item['title']);
-		list($author,$post) = explode( ':', $title, 2 );
+		$author = preg_replace( '|(.+?):.+|s', '$1', $item['title'] );
+		$post = preg_replace( '|.+?:(.+)|s', '$1', $item['title'] );
 		$link = clean_url($item['link']);
 
 		echo "\t<li><a href='$link'><span class='post'>$post</span><span class='hidden'> - </span><cite>$author</cite></a></li>\n";

@@ -3,7 +3,6 @@
 function wptexturize($text) {
 	global $wp_cockneyreplace;
 	$next = true;
-	$has_pre_parent = false;
 	$output = '';
 	$curl = '';
 	$textarr = preg_split('/(<.*>|\[.*\])/Us', $text, -1, PREG_SPLIT_DELIM_CAPTURE);
@@ -27,17 +26,13 @@ function wptexturize($text) {
 	for ( $i = 0; $i < $stop; $i++ ) {
  		$curl = $textarr[$i];
 
-		if (isset($curl{0}) && '<' != $curl{0} && '[' != $curl{0} && $next && !$has_pre_parent) { // If it's not a tag
+		if (isset($curl{0}) && '<' != $curl{0} && '[' != $curl{0} && $next) { // If it's not a tag
 			// static strings
 			$curl = str_replace($static_characters, $static_replacements, $curl);
 			// regular expressions
 			$curl = preg_replace($dynamic_characters, $dynamic_replacements, $curl);
-		} elseif (strpos($curl, '<code') !== false || strpos($curl, '<kbd') !== false || strpos($curl, '<style') !== false || strpos($curl, '<script') !== false) {
+		} elseif (strpos($curl, '<code') !== false || strpos($curl, '<pre') !== false || strpos($curl, '<kbd') !== false || strpos($curl, '<style') !== false || strpos($curl, '<script') !== false) {
 			$next = false;
-		} elseif (strpos($curl, '<pre') !== false) {
-			$has_pre_parent = true;
-		} elseif (strpos($curl, '</pre>') !== false) {
-			$has_pre_parent = false;
 		} else {
 			$next = true;
 		}
@@ -331,9 +326,6 @@ function sanitize_user( $username, $strict = false ) {
 	// If strict, reduce to ASCII for max portability.
 	if ( $strict )
 		$username = preg_replace('|[^a-z0-9 _.\-@]|i', '', $username);
-
-	// Consolidate contiguous whitespace
-	$username = preg_replace('|\s+|', ' ', $username);
 
 	return apply_filters('sanitize_user', $username, $raw_username, $strict);
 }
@@ -847,9 +839,6 @@ function human_time_diff( $from, $to = '' ) {
 function wp_trim_excerpt($text) { // Fakes an excerpt if needed
 	if ( '' == $text ) {
 		$text = get_the_content('');
-		
-		$text = strip_shortcodes( $text ); 
-		
 		$text = apply_filters('the_content', $text);
 		$text = str_replace(']]>', ']]&gt;', $text);
 		$text = strip_tags($text);
@@ -1132,9 +1121,13 @@ function wp_richedit_pre($text) {
 	// Filtering a blank results in an annoying <br />\n
 	if ( empty($text) ) return apply_filters('richedit_pre', '');
 
-	$output = convert_chars($text);
+	$output = $text;
+	$output = convert_chars($output);
 	$output = wpautop($output);
-	$output = htmlspecialchars($output, ENT_NOQUOTES);
+
+	// These must be double-escaped or planets will collide.
+	$output = str_replace('&lt;', '&amp;lt;', $output);
+	$output = str_replace('&gt;', '&amp;gt;', $output);
 
 	return apply_filters('richedit_pre', $output);
 }

@@ -111,10 +111,7 @@ div#dashboard-widgets {
 .tablenav-pages {
 	display: block;
 	margin-top: -3px;
-}
 
-table.ie-fixed {
-	table-layout: fixed;
 }
 
 #post-search .button, #widget-search .button {

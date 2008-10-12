@@ -7,9 +7,8 @@ wp_enqueue_script('autosave');
 wp_enqueue_script('page');
 if ( user_can_richedit() )
 	wp_enqueue_script('editor');
-add_thickbox();
+wp_enqueue_script('thickbox');
 wp_enqueue_script('media-upload');
-wp_enqueue_script('word-count');
 
 require_once('admin-header.php');
 ?>

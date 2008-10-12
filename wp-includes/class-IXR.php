@@ -13,12 +13,6 @@
  * @license BSD License http://www.opensource.org/licenses/bsd-license.php
  */
 
-/**
- * IXR_Value
- *
- * @package IXR
- * @since 1.5
- */
 class IXR_Value {
     var $data;
     var $type;
@@ -126,12 +120,7 @@ class IXR_Value {
     }
 }
 
-/**
- * IXR_Message
- *
- * @package IXR
- * @since 1.5
- */
+
 class IXR_Message {
     var $message;
     var $messageType;  // methodCall / methodResponse / fault
@@ -274,12 +263,7 @@ class IXR_Message {
     }
 }
 
-/**
- * IXR_Server
- *
- * @package IXR
- * @since 1.5
- */
+
 class IXR_Server {
     var $data;
     var $callbacks = array();
@@ -440,12 +424,6 @@ EOD;
     }
 }
 
-/**
- * IXR_Request
- *
- * @package IXR
- * @since 1.5
- */
 class IXR_Request {
     var $method;
     var $args;
@@ -476,12 +454,7 @@ EOD;
     }
 }
 
-/**
- * IXR_Client
- *
- * @package IXR
- * @since 1.5
- */
+
 class IXR_Client {
     var $server;
     var $port;
@@ -592,12 +565,7 @@ class IXR_Client {
     }
 }
 
-/**
- * IXR_Error
- *
- * @package IXR
- * @since 1.5
- */
+
 class IXR_Error {
     var $code;
     var $message;
@@ -629,12 +597,7 @@ EOD;
     }
 }
 
-/**
- * IXR_Date
- *
- * @package IXR
- * @since 1.5
- */
+
 class IXR_Date {
     var $year;
     var $month;
@@ -678,12 +641,7 @@ class IXR_Date {
     }
 }
 
-/**
- * IXR_Base64
- *
- * @package IXR
- * @since 1.5
- */
+
 class IXR_Base64 {
     var $data;
     function IXR_Base64($data) {
@@ -694,12 +652,7 @@ class IXR_Base64 {
     }
 }
 
-/**
- * IXR_IntrospectionServer
- *
- * @package IXR
- * @since 1.5
- */
+
 class IXR_IntrospectionServer extends IXR_Server {
     var $signatures;
     var $help;
@@ -843,12 +796,7 @@ class IXR_IntrospectionServer extends IXR_Server {
     }
 }
 
-/**
- * IXR_ClientMulticall
- *
- * @package IXR
- * @since 1.5
- */
+
 class IXR_ClientMulticall extends IXR_Client {
     var $calls = array();
     function IXR_ClientMulticall($server, $path = false, $port = 80) {
